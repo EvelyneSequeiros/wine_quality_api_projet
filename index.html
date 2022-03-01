@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Wine quality API Documentation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <style type="text/css">
+
+    body{ 
+        font-family: 'lato', Arial, sans-serif; 
+        font-size:14px;
+        margin: 0;
+        line-height: 150%;
+    }
+
+    .bandeau{
+      background-image: url("img/banierevin.jpeg");
+      background-repeat: no-repeat;
+      height: 218px;
+      padding-top: 80px;
+    }
+
+    h1{
+      text-align: center;
+      padding-top: 50px;
+      margin-bottom: 50px;
+      background-color: #03c2db;
+      padding: 30px;
+      color: #ffffff;
+      width: 430px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    h3,h2{
+      margin-top: 50px;
+    }
+
+    .centered{
+        background-color: #ffffff;
+        width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+    }
+
+    .footer{
+      background-color: #000000;
+      color: #ffffff;
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      margin-top: 50px;
+    }
+
+    </style>
+</head>
+
+<body style="">
+
+<div class="bandeau">
+    <h1>Wine quality API Documentation</h1>
+</div>
+
+<div class="centered">
+    <p>
+      Welcome to the API documentation for our wine quality prediction AP-AI.
+    </p>
+    <p>
+      What is AP-AI? It's a new beautiful AI model wrap into an API to help you
+      to build the best products.
+    </p>
+    <div>
+      <h2>Endpoints</h2>
+      <blockquote>
+      POST /predict
+      </blockquote>
+      <div>
+        <p>
+          This endpoint allows you to make a prediction of the wine quality according to chemical composition of a given wine.
+        </p>
+        <h3>
+          How to request this endpoint?
+        </h3>
+        <p>
+          You should request this endpoint using a POST method with a JSON content. 
+        </p>
+        <p>
+          Your JSON should contain at least :  "input" key with associated list of [1 - n] lists of 11 float values, such as :
+        </p>
+        <p>
+            <pre>
+                <code>
+    {
+      "input": [[7.0, 0.27, 0.36, 20.7, 0.045, 45.0, 170.0, 1.001, 3.0, 0.45, 8.8]]
+    }
+                </code>
+            </pre>
+        </p>
+        <p>
+            In which : 
+        </p>
+        <br>
+            7.0 is the fixed acidity value<br>
+            0.27 is the volatile acidity value<br>
+            0.36 is the citric acid concentration<br> 
+            20.7 is the residual sugar value<br> 
+            0.045 is the concentration in chlorides<br> 
+            45.0 is the free sulfur dioxide value<br> 
+            170.0 is the total sulfur dioxide value<br> 
+            1.001 is the density<br> 
+            3.0 is the pH<br> 
+            0.45 is the sulphates concentration<br>
+            8.8 is the alcohol concentration<br> 
+        </p>
+        <p>
+          Example, with unique input (such as above) : 
+        </p>
+        <p>
+          <pre>
+            <code>
+    $ curl -i -H "Content-Type: application/json" -X POST -d '{
+                                                                "input": [[7.0, 0.27, 0.36, 20.7, 0.045, 45.0, 170.0, 1.001, 3.0, 0.45, 8.8]]
+                                                              }' https://winequality-api-esequeiros.herokuapp.com/predict
+            </code>
+          </pre>
+        </p>
+        <p>
+          It returns a JSON like so:
+          <pre>
+            <code>
+    {'prediction': [6.0]}
+            </code>
+          </pre>
+        </p>
+        <p>
+            Example, with several inputs : 
+          </p>
+          <p>
+            <pre>
+              <code>
+      $ curl -i -H "Content-Type: application/json" -X POST -d '{
+                                                                  "input": [
+                                                                  [7.0, 0.27, 0.36, 20.7, 0.045, 45.0, 170.0, 1.001, 3.0, 0.45, 8.8]
+                                                                  [5.0, 0.98, 0.32, 18.9, 0.050, 75.0, 122.0, 0.401, 3.1, 0.21, 1.2]
+                                                                  ]
+                                                                }' https://winequality-api-esequeiros.herokuapp.com/predict
+              </code>
+            </pre>
+          </p>
+          It returns a JSON like so:
+          <pre>
+            <code>
+    {'prediction': [6.0, 5.0]}
+            </code>
+          </pre>
+        </p>
+        <h3>
+          Errors
+        </h3>
+        <p>
+          Our API will return an error with format:
+          <pre>
+            <code>
+    {
+      "msg": <i>a short description</i>
+    }
+            </code>
+          </pre>
+        </p>
+        <p>
+          Identified errors:
+          <ul>
+            <li>Missing JSON</li>
+          </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+<div class="footer">
+<p>Evelyne Sequeiros 2022</p>
+</div>
+
+</body>
+</html>
